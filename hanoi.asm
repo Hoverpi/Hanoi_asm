@@ -1,6 +1,6 @@
 ####### Authors ######
 # José Enrique Rios Gómez
-# Yael 
+# Yael Salvador Morales Renteria
 ####### Authors ######
 
 ####### C Code #######

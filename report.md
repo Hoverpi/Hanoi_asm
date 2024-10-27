@@ -1,6 +1,6 @@
 ---
 title: "Recursive Implementation of the Hanoi Towers in RISC-V: Solution, Analysis and Simulation in RARS"
-author: ["enrique.rios@iteso.mx, "]
+author: ["enrique.rios@iteso.mx / Ex: 750259, yael.morales@iteso.mx / Ex: 751669"]
 date: "2024-10-26"
 subject: "ORGANIZATION AND ARCHITECTURE OF COMPUTERS (O2024_ESI3913B)"
 keywords: [code, assembly, risc-v, hanoi]

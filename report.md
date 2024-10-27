@@ -237,3 +237,5 @@ end_for:    jal  ra, hanoi
 ![Flowchat](<Flowchat.jpg>)
 
 # Conclusions
+
+**Yael Salvador Morales Renteria:** By means of this practice we saw that to implement the towers of hanoi is something complicated in assembly language since in a language like C, pyhton, etc. it is easier since everything is integrated but in this language we saw that we use more than 100 lines of code to be able to make this exercise but thanks to this we can save memory inside the device that we are using and even in didactic terms as the machine solves this algorithm that we did.

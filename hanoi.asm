@@ -18,6 +18,7 @@
 #     int N = 3; // Number of disks
 #     TowerOfHanoi(n, 'A', 'C', 'B');  // A, B and C are names of rods
 #     return 0;
+# }
 ####### C Code #######
 
 .text

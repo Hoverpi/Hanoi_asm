@@ -23,7 +23,7 @@
 
 .text
 main:		
-	    addi s0, zero, 15			# N = 3
+	    addi s0, zero, 3			# N = 3
 	    
 	    lui  s1, 0x10010
 	    addi s1, s1, 0			# Torre A = 0x10010000
@@ -130,4 +130,3 @@ else:	    addi sp, sp, -4            		# Espacio en el stack
 	    jalr ra                    		# Retornar
 	
 exit:	    j exit                     		# Fin del programa
-

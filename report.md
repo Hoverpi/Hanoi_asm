@@ -1,7 +1,7 @@
 ---
 title: "Recursive Implementation of the Hanoi Towers in RISC-V"
 author: ["enrique.rios@iteso.mx / Ex: 750259, yael.morales@iteso.mx / Ex: 751669"]
-date: "2024-10-26"
+date: "2024-10-27"
 subject: "ORGANIZATION AND ARCHITECTURE OF COMPUTERS (O2024_ESI3913B)"
 keywords: [code, assembly, risc-v, hanoi]
 subtitle: "Practice 1"
@@ -26,7 +26,7 @@ During practice, this assembly language puzzle was implemented using the RARS si
 
 ## Github repository
 
-[https://github.com/Hoverpi/Hanoi_asm](https://github.com/Hoverpi/Hanoi_asm)
+[[Click here] https://github.com/Hoverpi/Hanoi_asm](https://github.com/Hoverpi/Hanoi_asm)
 
 # Hanoi Risc-V Development
 ## C code Hanoi Algorithm
@@ -310,7 +310,7 @@ During the recursion, registers ra (return address) and s0 (disk count) are save
 
 ## Video Test
 
-[Hanoi Test with 4 Disks](https://drive.google.com/file/d/16n7w1MFO3jAq1OPLUwCCUnfNA4yC5bYF/view?usp=sharing)
+[[Click here] Hanoi Test with 4 Disks](https://drive.google.com/file/d/16n7w1MFO3jAq1OPLUwCCUnfNA4yC5bYF/view?usp=sharing)
 
 ## 8 Disks Stadistics
 
@@ -326,5 +326,5 @@ During the recursion, registers ra (return address) and s0 (disk count) are save
 
 **José Enrique Rios Gómez:** Implementing the Hanoi algorithm in assembly was an incredibly challenging experience, especially when recursion was introduced; it added an extra layer of complexity that made the task feel daunting. Despite the difficulties, I can't fault the language itself because assembly offers significant control over the operations being performed, which is undeniably valuable. However, for larger program development, I find it hard to envision myself using assembly. This is precisely why higher-level languages and their compilers exist. Nonetheless, from a learning standpoint, working with assembly proved to be an enriching experience, greatly enhancing my understanding of low-level operations and system mechanics.
 
-# References
+
 [^1]: [Hanoi Algorithm base code](https://www.geeksforgeeks.org/c-program-for-tower-of-hanoi/)

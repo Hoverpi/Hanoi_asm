@@ -309,22 +309,11 @@ During the recursion, registers ra (return address) and s0 (disk count) are save
 # Tests
 ## 8 Disks Stadistics
 
-![8 Disks Stadistics](8-Disks-Stadistics.png)
-<!---
-<img src="8-Disks-Stadistics.png" alt="[8 Disks Stadistics" width="50%" height="auto">
--->
+<center>![8 Disks Stadistics](8-Disks-Stadistics.png)</center>
+
 ## 4 <= N <= 15 Graphic 
-<!---
+
 ![Instruction Count Graphic](Instruction-Count-Graphic.png)
--->
-
-<img src="Instruction-Count-Graphic.png" alt="Instruction Count Graphic" width="50%" height="auto">
-
-# Flowchart
-<!---
-![Flowchat](<Flowchat.jpg>)
--->
-<img src="Flowchat.jpg" alt="Flowchat" width="50%" height="auto">
 
 # Conclusions
 

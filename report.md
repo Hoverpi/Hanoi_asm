@@ -48,6 +48,8 @@ int main() {
     return 0;
 }
 ```
+[1^]
+
 
 ## Risc-V Assembly Code
 
@@ -328,4 +330,7 @@ During the recursion, registers ra (return address) and s0 (disk count) are save
 
 **Yael Salvador Morales Renteria:** By means of this practice we saw that to implement the towers of hanoi is something complicated in assembly language since in a language like C, pyhton, etc. it is easier since everything is integrated but in this language we saw that we use more than 100 lines of code to be able to make this exercise but thanks to this we can save memory inside the device that we are using and even in didactic terms as the machine solves this algorithm that we did.
 
-**José Enrique Rios Gómez:** 
+**José Enrique Rios Gómez:** Implementing the Hanoi algorithm in assembly was an incredibly challenging experience, especially when recursion was introduced; it added an extra layer of complexity that made the task feel daunting. Despite the difficulties, I can't fault the language itself because assembly offers significant control over the operations being performed, which is undeniably valuable. However, for larger program development, I find it hard to envision myself using assembly. This is precisely why higher-level languages and their compilers exist. Nonetheless, from a learning standpoint, working with assembly proved to be an enriching experience, greatly enhancing my understanding of low-level operations and system mechanics.
+
+# References
+[1^]: [Hanoi Algorithm base code](https://www.geeksforgeeks.org/c-program-for-tower-of-hanoi/)

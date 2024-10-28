@@ -71,8 +71,7 @@ main:
 		
 	    addi s10, zero, 0			# Counter initialized to 0
 	    addi s11, zero, 0x20		# Offset value for moving between towers
-		
-        addi t1, s0, -1				# n = N - 1 (one less than the total disks)
+		addi t1, s0, -1				# n = N - 1 (one less than the total disks)
 
 	    addi t0, zero, 0			# i = 0 (initialize loop index)
 	    addi t5, zero, 0			# Initialize count to 0

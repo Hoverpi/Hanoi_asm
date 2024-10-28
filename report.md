@@ -7,7 +7,7 @@ keywords: [code, assembly, risc-v, hanoi]
 subtitle: "Practice 1"
 lang: "en"
 titlepage: true
-titlepage-color: "FFEFD5"
+titlepage-color: "FFFFFF"
 titlepage-text-color: "000000"
 titlepage-rule-color: "000000"
 titlepage-rule-height: 2

@@ -54,114 +54,115 @@ int main() {
 ```python
 .text
 main:		
-	    addi s0, zero, 3			# N = 3
+	    addi s0, zero, 3			# N = 3 (number of disks)
 	    
-	    lui  s1, 0x10010
-	    addi s1, s1, 0			# Torre A = 0x10010000
-	    addi s2, s1, 4			# Torre B = 0x10010004
-	    addi s3, s2, 4			# Torre C = 0x10010008
+	    lui  s1, 0x10010			# Load upper immediate for the base address
+	    addi s1, s1, 0			# Torre A = 0x10010000 (initialize base address for Tower A)
+	    addi s2, s1, 4			# Torre B = 0x10010004 (initialize base address for Tower B)
+	    addi s3, s2, 4			# Torre C = 0x10010008 (initialize base address for Tower C)
 		
-	    # Move B and C pointer to the start of stack
-	    slli t0, s0, 5		        # start = N << 5
-	    add  s2, s2, t0			# Direccion en memoria de B			
-    	    add  s3, s3, t0			# Direccion en memoria de C
+	    # Move B and C pointers to the start of stack
+	    slli t0, s0, 5		        # start = N << 5 (shift left to calculate initial position)
+	    add  s2, s2, t0			# Move Torre B pointer to calculated stack position
+	    add  s3, s3, t0			# Move Torre C pointer to calculated stack position
 
-	    # Desplazamiento inicial en bytes
-	    addi t2, zero, 0x00			# Desplazamiento inicial)
+	    # Initial offset in bytes
+	    addi t2, zero, 0x00			# Initial offset set to 0
 		
-	    addi s10, zero, 0			# Counter
-	    addi s11, zero, 0x20
+	    addi s10, zero, 0			# Counter initialized to 0
+	    addi s11, zero, 0x20			# Offset value for moving between towers
 		
-        addi t1, s0, -1			# n = N - 1
+        addi t1, s0, -1				# n = N - 1 (one less than the total disks)
 
-	    addi t0, zero, 0			# i = 0
-	    addi t5, zero, 0
+	    addi t0, zero, 0			# i = 0 (initialize loop index)
+	    addi t5, zero, 0			# Initialize count to 0
 		
-for:	    beq  s0, t0, hanoi			# Si i == N, salir
+for:	    beq  s0, t0, hanoi			# If i == N, jump to hanoi (end loop)
 
-            addi t1, t0, 1			# a = i + 1
-	    # Calcular la dirección personalizada para almacenar el dato
-	    add  t2, zero, s1			# t3 = dirección de almacenamiento
-	    add  t4, t2, t5 
+            addi t1, t0, 1			# a = i + 1 (calculate the next disk number)
+	    # Calculate the custom address for storing the disk number
+	    add  t2, zero, s1			# Set t2 to the base address of the current tower
+	    add  t4, t2, t5 			# Calculate the target address for storing the value
 	    
-            sw   t1, 0(t4)				# Guardar t1 en la dirección calculada
-            
-            addi t5, t5, 0x20			# count += 0x20
-	    addi t0, t0, 1			# Incrementar i
-    	    j    for				# Volver al inicio del bucle
+            sw   t1, 0(t4)			# Store the disk number (t1) at the calculated address
+	    
+            addi t5, t5, 0x20			# Increment count by 0x20 (move to the next position)
+	    addi t0, t0, 1			# Increment loop index i
+    	    j    for				# Jump back to the start of the loop
 		
 end_for:    jal  ra, hanoi
 	    j    exit
 		
 hanoi:	    addi t0, zero, 1
-if:	    bne  s0, t0, else           		# Si s0 != 1, ir a else
-	    sw   zero, 0x0(s1)             	# Borrar disco de SRC
-	    add  s1, s1, s11          		# Mover SRC -> SRC + OFFSET
-	    sub  s3, s3, s11         		# Mover DST -> DST - OFFSET
-	    sw   s0, 0(s3)               		# Agregar disco a DST
-	    addi s10, s10, 1			# counter = counter + 1
-	    jalr ra                    		# Retornar de la recursión
+if:	    bne  s0, t0, else           		# If s0 != 1, jump to 'else'
+	    sw   zero, 0x0(s1)             	# Remove disk from SRC
+	    add  s1, s1, s11          		# Move SRC -> SRC + OFFSET
+	    sub  s3, s3, s11         		# Move DST -> DST - OFFSET
+	    sw   s0, 0(s3)               		# Place disk in DST
+	    addi s10, s10, 1			# Increment counter
+	    jalr ra                    		# Return from recursion
 	    
-	    # Guardar ra y s0 en el stack antes de la primera llamada recursiva	
-else:	    addi sp, sp, -4            		# Espacio en el stack
-	    sw   ra, 0x0(sp)               		# Guardar ra
+	    # Save ra and s0 on the stack before the first recursive call	
+else:	    addi sp, sp, -4            		# Reserve space in the stack
+	    sw   ra, 0x0(sp)               	# Save ra
 	    addi sp, sp, -4
-	    sw   s0, 0x0(sp)               		# Guardar s0
+	    sw   s0, 0x0(sp)               	# Save s0
 	    addi s0, s0, -1            		# n = n - 1
 	
-	    # Intercambiar auxiliares para la llamada recursiva
+	    # Swap auxiliary variables for the recursive call
 	    add  t1, s2, zero           		# AUX -> TEMP
 	    add  s2, s3, zero           		# AUX -> DST
 	    add  s3, t1, zero           		# DST -> AUX/TEMP
 	    
 	    jal  ra, hanoi              		# hanoi(n-1, SRC, AUX, DST)
 	
-	    # Restaurar auxiliares para la siguiente llamada recursiva
+	    # Restore auxiliary variables for the next recursive call
 	    add  t1, s2, zero           		# AUX -> TEMP
 	    add  s2, s3, zero           		# AUX -> DST
 	    add  s3, t1, zero           		# DST -> AUX/TEMP
 	
-	    # Restaurar s0 y ra después de la primera llamada recursiva
-	    lw   s0, 0x0(sp)               		# Recuperar s0
+	    # Restore s0 and ra after the first recursive call
+	    lw   s0, 0x0(sp)               		# Recover s0
 	    addi sp, sp, 4
-	    lw   ra, 0x0(sp)               		# Recuperar ra
+	    lw   ra, 0x0(sp)               		# Recover ra
 	    addi sp, sp, 4
 	
-	    sw   zero, 0x0(s1)             	# Borrar disco de SRC
-	    add  s1, s1, s11          		# Mover SRC -> SRC + OFFSET
-	    sub  s3, s3, s11         		# Mover DST -> DST - OFFSET
-	    sw   s0, 0x0(s3)               		# Agregar disco a DST
+	    sw   zero, 0x0(s1)             	# Remove disk from SRC
+	    add  s1, s1, s11          		# Move SRC -> SRC + OFFSET
+	    sub  s3, s3, s11         		# Move DST -> DST - OFFSET
+	    sw   s0, 0x0(s3)               		# Place disk in DST
 	    
-	    addi s10, s10, 1 			# n = n + 1
+	    addi s10, s10, 1 			# Increment counter
 	    
-	    # Guardar ra y s0 en el stack antes de la segunda llamada recursiva
+	    # Save ra and s0 on the stack before the second recursive call
 	    addi sp, sp, -4
-	    sw   ra, 0x0(sp)               		# Guardar ra
+	    sw   ra, 0x0(sp)               	# Save ra
 	    addi sp, sp, -4
-	    sw   s0, 0x0(sp)               		# Guardar s0
+	    sw   s0, 0x0(sp)               	# Save s0
 	    
 	    addi s0, s0, -1            		# n = n - 1
 	
-	    # Intercambiar auxiliares para la segunda llamada recursiva
+	    # Swap auxiliary variables for the second recursive call
 	    add  t1, s1, zero           		# TEMP -> AUX
 	    add  s1, s2, zero           		# AUX -> DST
-	    add  s2, t1, zero           		# DST -> TMP
+	    add  s2, t1, zero           		# DST -> TEMP
 	    jal  ra, hanoi              		# hanoi(n-1, AUX, DST, SRC)
 	
-	    # Restaurar auxiliares y limpiar el stack después de la segunda llamada
+	    # Restore auxiliary variables and clear the stack after the second call
 	    add  t1, s1, zero           		# TEMP -> SRC
 	    add  s1, s2, zero           		# SRC -> AUX
 	    add  s2, t1, zero           		# AUX -> TEMP
 	    
-	    lw   s0, 0x0(sp)               		# Recuperar s0
+	    lw   s0, 0x0(sp)               		# Recover s0
 	    addi sp, sp, 4
-	    lw   ra, 0x0(sp)               		# Recuperar ra
+	    lw   ra, 0x0(sp)               		# Recover ra
 	    addi sp, sp, 4
 	
-	    jalr ra                    		# Retornar
+	    jalr ra                    		# Return
 	
 exit:	    j    exit                     		# Fin del programa
 ```
+
 
 ## Registers Description
 
@@ -178,8 +179,6 @@ exit:	    j    exit                     		# Fin del programa
 | t2, t4   | Utilizados para calcular y manejar las direcciones en memoria donde se almacenan los discos en las torres.                                     |
 | t5       | Contador de desplazamiento en el bucle inicial, incrementado por 0x20 para organizar los discos.                                               |
 | ra       | Registro de retorno, usado para almacenar la dirección de retorno en las llamadas recursivas.                                                  |
-
-
 
 
 ## Breakdown
@@ -229,17 +228,105 @@ end_for:    jal  ra, hanoi
 	    j    exit
 ```
 
+This section of the code iterates over the disks, storing each one in memory with a calculated address. The loop, starting at for, runs until i (t0) equals N (s0). In each iteration, it calculates the memory address using Tower A's base address (s1) plus an offset (t5). The disk number (t1 = i + 1) is then saved at this address.
+
+The offset (t5) is updated by 0x20 for the next disk, and i is incremented. Once the loop finishes, the program jumps to the hanoi procedure for solving the Towers of Hanoi, and then moves to exit to end this segment.
+
+```python
+hanoi:	    addi t0, zero, 1
+if:	    bne  s0, t0, else           		# If s0 != 1, jump to 'else'
+	    sw   zero, 0x0(s1)             	# Remove disk from SRC
+	    add  s1, s1, s11          		# Move SRC -> SRC + OFFSET
+	    sub  s3, s3, s11         		# Move DST -> DST - OFFSET
+	    sw   s0, 0(s3)               		# Place disk in DST
+	    addi s10, s10, 1			# Increment counter
+	    jalr ra                    		# Return from recursion
+	    
+	    # Save ra and s0 on the stack before the first recursive call	
+else:	    addi sp, sp, -4            		# Reserve space in the stack
+	    sw   ra, 0x0(sp)               	# Save ra
+	    addi sp, sp, -4
+	    sw   s0, 0x0(sp)               	# Save s0
+	    addi s0, s0, -1            		# n = n - 1
+	
+	    # Swap auxiliary variables for the recursive call
+	    add  t1, s2, zero           		# AUX -> TEMP
+	    add  s2, s3, zero           		# AUX -> DST
+	    add  s3, t1, zero           		# DST -> AUX/TEMP
+	    
+	    jal  ra, hanoi              		# hanoi(n-1, SRC, AUX, DST)
+	
+	    # Restore auxiliary variables for the next recursive call
+	    add  t1, s2, zero           		# AUX -> TEMP
+	    add  s2, s3, zero           		# AUX -> DST
+	    add  s3, t1, zero           		# DST -> AUX/TEMP
+	
+	    # Restore s0 and ra after the first recursive call
+	    lw   s0, 0x0(sp)               		# Recover s0
+	    addi sp, sp, 4
+	    lw   ra, 0x0(sp)               		# Recover ra
+	    addi sp, sp, 4
+	
+	    sw   zero, 0x0(s1)             	# Remove disk from SRC
+	    add  s1, s1, s11          		# Move SRC -> SRC + OFFSET
+	    sub  s3, s3, s11         		# Move DST -> DST - OFFSET
+	    sw   s0, 0x0(s3)               		# Place disk in DST
+	    
+	    addi s10, s10, 1 			# Increment counter
+	    
+	    # Save ra and s0 on the stack before the second recursive call
+	    addi sp, sp, -4
+	    sw   ra, 0x0(sp)               	# Save ra
+	    addi sp, sp, -4
+	    sw   s0, 0x0(sp)               	# Save s0
+	    
+	    addi s0, s0, -1            		# n = n - 1
+	
+	    # Swap auxiliary variables for the second recursive call
+	    add  t1, s1, zero           		# TEMP -> AUX
+	    add  s1, s2, zero           		# AUX -> DST
+	    add  s2, t1, zero           		# DST -> TEMP
+	    jal  ra, hanoi              		# hanoi(n-1, AUX, DST, SRC)
+	
+	    # Restore auxiliary variables and clear the stack after the second call
+	    add  t1, s1, zero           		# TEMP -> SRC
+	    add  s1, s2, zero           		# SRC -> AUX
+	    add  s2, t1, zero           		# AUX -> TEMP
+	    
+	    lw   s0, 0x0(sp)               		# Recover s0
+	    addi sp, sp, 4
+	    lw   ra, 0x0(sp)               		# Recover ra
+	    addi sp, sp, 4
+	
+	    jalr ra                    		# Return
+```
+
+This segment implements the recursive solution for the Towers of Hanoi. The base case (if) handles moving a single disk directly between source (SRC) and destination (DST). It removes the disk from SRC, adjusts the addresses using offsets, and places the disk in DST. If there are more than one disk (else), it recursively moves n-1 disks to an auxiliary tower (AUX), makes the move to the target tower, and then moves the n-1 disks from AUX to the destination.
+
+During the recursion, registers ra (return address) and s0 (disk count) are saved on the stack. Offsets are adjusted to ensure that the disks are moved correctly, taking into account each recursive call's impact on the towers' state. The program finishes the recursion with a jalr instruction that returns to the previous recursive level or ends the function when all operations are complete.
 
 # Tests
 ## 8 Disks Stadistics
-![8 Disks Stadistics](8-Disks-Stadistics.png)
 
+![8 Disks Stadistics](8-Disks-Stadistics.png)
+<!---
+<img src="8-Disks-Stadistics.png" alt="[8 Disks Stadistics" width="50%" height="auto">
+-->
 ## 4 <= N <= 15 Graphic 
+<!---
 ![Instruction Count Graphic](Instruction-Count-Graphic.png)
+-->
+
+<img src="Instruction-Count-Graphic.png" alt="Instruction Count Graphic" width="50%" height="auto">
 
 # Flowchart
+<!---
 ![Flowchat](<Flowchat.jpg>)
+-->
+<img src="Flowchat.jpg" alt="Flowchat" width="50%" height="auto">
 
 # Conclusions
 
 **Yael Salvador Morales Renteria:** By means of this practice we saw that to implement the towers of hanoi is something complicated in assembly language since in a language like C, pyhton, etc. it is easier since everything is integrated but in this language we saw that we use more than 100 lines of code to be able to make this exercise but thanks to this we can save memory inside the device that we are using and even in didactic terms as the machine solves this algorithm that we did.
+
+**José Enrique Rios Gómez:** 

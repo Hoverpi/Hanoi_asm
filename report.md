@@ -307,9 +307,14 @@ This segment implements the recursive solution for the Towers of Hanoi. The base
 During the recursion, registers ra (return address) and s0 (disk count) are saved on the stack. Offsets are adjusted to ensure that the disks are moved correctly, taking into account each recursive call's impact on the towers' state. The program finishes the recursion with a jalr instruction that returns to the previous recursive level or ends the function when all operations are complete.
 
 # Tests
+
+## Video Test
+
+[Hanoi Test with 4 Disks](https://drive.google.com/file/d/16n7w1MFO3jAq1OPLUwCCUnfNA4yC5bYF/view?usp=sharing)
+
 ## 8 Disks Stadistics
 
-<center>![8 Disks Stadistics](8-Disks-Stadistics.png)</center>
+![8 Disks Stadistics](8-Disks-Stadistics.png)
 
 ## 4 <= N <= 15 Graphic 
 

@@ -1,5 +1,5 @@
 ---
-title: "Recursive Implementation of the Hanoi Towers in RISC-V: Solution, Analysis and Simulation in RARS"
+title: "Recursive Implementation of the Hanoi Towers in RISC-V"
 author: ["enrique.rios@iteso.mx / Ex: 750259, yael.morales@iteso.mx / Ex: 751669"]
 date: "2024-10-26"
 subject: "ORGANIZATION AND ARCHITECTURE OF COMPUTERS (O2024_ESI3913B)"
@@ -167,19 +167,19 @@ exit:	    j    exit                   # End
 
 ## Registers Description
 
-| Register | Description                                                                                                                                    |
-|----------|------------------------------------------------------------------------------------------------------------------------------------------------|
-| s0       | Contiene el número total de discos (N) utilizado para las operaciones en las Torres de Hanoi.                                                  |
-| s1       | Dirección base para la Torre A en memoria.                                                                                                     |
-| s2       | Dirección base para la Torre B en memoria.                                                                                                     |
-| s3       | Dirección base para la Torre C en memoria.                                                                                                     |
-| s10      | Contador de movimientos realizados durante la solución de las Torres de Hanoi.                                                                 |
-| s11      | Offset constante (0x20) utilizado para calcular el desplazamiento en memoria entre posiciones de discos durante la manipulación de las torres. |
-| sp       | Stack pointer, usado para manejar la pila durante las llamadas recursivas y almacenar temporalmente registros importantes como `ra` y `s0`.    |
-| t0, t1   | Registros temporales utilizados para cálculos y comparación de valores en los bucles y condiciones del algoritmo.                              |
-| t2, t4   | Utilizados para calcular y manejar las direcciones en memoria donde se almacenan los discos en las torres.                                     |
-| t5       | Contador de desplazamiento en el bucle inicial, incrementado por 0x20 para organizar los discos.                                               |
-| ra       | Registro de retorno, usado para almacenar la dirección de retorno en las llamadas recursivas.                                                  |
+| Register | Description                                                                                                              |
+|----------|--------------------------------------------------------------------------------------------------------------------------|
+| s0       | Contains the total number of disks (N) used for operations in the Towers of Hanoi.                                       |
+| s1       | Base address for Tower A in memory.                                                                                      |
+| s2       | Base address for Tower B in memory.                                                                                      |
+| s3       | Base address for Tower C in memory.                                                                                      |
+| s10      | Move counter tracking the number of moves made during the solution of the Towers of Hanoi.                               |
+| s11      | Constant offset (0x20) used to calculate the memory displacement between disk positions during tower manipulation.       |
+| sp       | Stack pointer, used to manage the stack during recursive calls and temporarily store important registers like ra and s0. |
+| t0, t1   | Temporary registers used for calculations and value comparisons in the algorithm’s loops and conditions.                 |
+| t2, t4   | Used to calculate and manage memory addresses where the disks are stored in the towers.                                  |
+| t5       | Offset counter in the initial loop, incremented by 0x20 to organize the disks.                                           |
+| ra       | Return address register, used to store the return address during recursive calls.                                        |
 
 
 ## Breakdown

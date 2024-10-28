@@ -94,11 +94,11 @@ end_for:    jal  ra, hanoi
 	    j    exit
 		
 hanoi:	    addi t0, zero, 1
-if:	    bne  s0, t0, else           		# If s0 != 1, jump to 'else'
+if:	    bne  s0, t0, else           	# If s0 != 1, jump to 'else'
 	    sw   zero, 0x0(s1)             	# Remove disk from SRC
 	    add  s1, s1, s11          		# Move SRC -> SRC + OFFSET
 	    sub  s3, s3, s11         		# Move DST -> DST - OFFSET
-	    sw   s0, 0(s3)               		# Place disk in DST
+	    sw   s0, 0(s3)               	# Place disk in DST
 	    addi s10, s10, 1			# Increment counter
 	    jalr ra                    		# Return from recursion
 	    
@@ -110,27 +110,27 @@ else:	    addi sp, sp, -4            		# Reserve space in the stack
 	    addi s0, s0, -1            		# n = n - 1
 	
 	    # Swap auxiliary variables for the recursive call
-	    add  t1, s2, zero           		# AUX -> TEMP
-	    add  s2, s3, zero           		# AUX -> DST
-	    add  s3, t1, zero           		# DST -> AUX/TEMP
+	    add  t1, s2, zero           	# AUX -> TEMP
+	    add  s2, s3, zero           	# AUX -> DST
+	    add  s3, t1, zero           	# DST -> AUX/TEMP
 	    
-	    jal  ra, hanoi              		# hanoi(n-1, SRC, AUX, DST)
+	    jal  ra, hanoi              	# hanoi(n-1, SRC, AUX, DST)
 	
 	    # Restore auxiliary variables for the next recursive call
-	    add  t1, s2, zero           		# AUX -> TEMP
-	    add  s2, s3, zero           		# AUX -> DST
-	    add  s3, t1, zero           		# DST -> AUX/TEMP
+	    add  t1, s2, zero           	# AUX -> TEMP
+	    add  s2, s3, zero           	# AUX -> DST
+	    add  s3, t1, zero           	# DST -> AUX/TEMP
 	
 	    # Restore s0 and ra after the first recursive call
-	    lw   s0, 0x0(sp)               		# Recover s0
+	    lw   s0, 0x0(sp)               	# Recover s0
 	    addi sp, sp, 4
-	    lw   ra, 0x0(sp)               		# Recover ra
+	    lw   ra, 0x0(sp)               	# Recover ra
 	    addi sp, sp, 4
 	
 	    sw   zero, 0x0(s1)             	# Remove disk from SRC
 	    add  s1, s1, s11          		# Move SRC -> SRC + OFFSET
 	    sub  s3, s3, s11         		# Move DST -> DST - OFFSET
-	    sw   s0, 0x0(s3)               		# Place disk in DST
+	    sw   s0, 0x0(s3)               	# Place disk in DST
 	    
 	    addi s10, s10, 1 			# Increment counter
 	    
@@ -143,24 +143,24 @@ else:	    addi sp, sp, -4            		# Reserve space in the stack
 	    addi s0, s0, -1            		# n = n - 1
 	
 	    # Swap auxiliary variables for the second recursive call
-	    add  t1, s1, zero           		# TEMP -> AUX
-	    add  s1, s2, zero           		# AUX -> DST
-	    add  s2, t1, zero           		# DST -> TEMP
-	    jal  ra, hanoi              		# hanoi(n-1, AUX, DST, SRC)
+	    add  t1, s1, zero           	# TEMP -> AUX
+	    add  s1, s2, zero           	# AUX -> DST
+	    add  s2, t1, zero           	# DST -> TEMP
+	    jal  ra, hanoi              	# hanoi(n-1, AUX, DST, SRC)
 	
 	    # Restore auxiliary variables and clear the stack after the second call
-	    add  t1, s1, zero           		# TEMP -> SRC
-	    add  s1, s2, zero           		# SRC -> AUX
-	    add  s2, t1, zero           		# AUX -> TEMP
+	    add  t1, s1, zero           	# TEMP -> SRC
+	    add  s1, s2, zero           	# SRC -> AUX
+	    add  s2, t1, zero           	# AUX -> TEMP
 	    
-	    lw   s0, 0x0(sp)               		# Recover s0
+	    lw   s0, 0x0(sp)               	# Recover s0
 	    addi sp, sp, 4
-	    lw   ra, 0x0(sp)               		# Recover ra
+	    lw   ra, 0x0(sp)               	# Recover ra
 	    addi sp, sp, 4
 	
 	    jalr ra                    		# Return
 	
-exit:	    j    exit                     		# Fin del programa
+exit:	    j    exit                   # End
 ```
 
 
